@@ -15,14 +15,18 @@ type Config struct {
 	DBPort        string
 }
 
+func (cfg *Config) GetDSN() string {
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName)
+}
+
 func LoadConfig() *Config {
-	fmt.Println("Load config...")
+	log.Println("Load config...")
 
 	return &Config{
 		ServerAddress: getEnv("SERVER_ADDRESS", ":8080"),
-		DBUser:        getEnv("DB_USER", "root"),
+		DBUser:        getEnv("DB_USER", "cluster_user"),
 		DBPassword:    getEnv("DB_PASSWORD", "password"),
-		DBName:        getEnv("DB_NAME", "mydb"),
+		DBName:        getEnv("DB_NAME", "cluster_mate"),
 		DBHost:        getEnv("DB_HOST", "localhost"),
 		DBPort:        getEnv("DB_PORT", "3306"),
 	}
