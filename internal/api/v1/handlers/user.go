@@ -20,17 +20,16 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func getUser(w http.ResponseWriter, r *http.Request) {
-	userID := chi.URLParam(r, "userID")
+	userID := chi.URLParam(r, "id")
 	w.Write([]byte("Get user " + userID))
 }
 
 func updateUser(w http.ResponseWriter, r *http.Request) {
-	userID := chi.URLParam(r, "userID")
+	userID := chi.URLParam(r, "id")
 	w.Write([]byte("Update user " + userID))
 }
 
 func deleteUser(w http.ResponseWriter, r *http.Request) {
-	userID := chi.URLParam(r, "userID")
+	userID := chi.URLParam(r, "id")
 	w.Write([]byte("Get user " + userID))
 }
-
