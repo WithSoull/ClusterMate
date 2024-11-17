@@ -20,6 +20,7 @@ func UserRouter(conn *sql.DB) http.Handler {
 	r.Delete("/{id}", deleteUserHandler(conn))
 	return r
 }
+
 func createUserHandler(conn *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var user models.User
