@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"ClusterMate/internal/db"
+	db "ClusterMate/internal/db/crud"
 	"ClusterMate/internal/models"
 	"database/sql"
 	"encoding/json"
@@ -81,13 +81,13 @@ func updateUserHandler(conn *sql.DB) http.HandlerFunc {
 		}
 
 		// Проверяем, что все обязательные поля были заполнены
-		if user.Name == "" || user.Email == "" || user.Password == "" || user.RoleID == 0 {
+		if user.Name == "" || user.Email == "" || user.ClusterID == 0 || user.Password == "" || user.RoleID == 0 {
 			http.Error(w, "All fields are required", http.StatusBadRequest)
 			return
 		}
 
 		// Вызываем функцию для обновления пользователя
-		err = db.UpdateUser(conn, id, user.Name, user.RoleID, user.Email, user.Password)
+		err = db.UpdateUser(conn, id, user.Name, user.RoleID, user.ClusterID, user.Email, user.Password)
 
 		if err != nil {
 			log.Printf("Error: %s", err)

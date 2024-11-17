@@ -8,7 +8,7 @@ import (
 
 // CreateUser - добавление нового пользователя
 func CreateUser(conn *sql.DB, user models.User) (int64, error) {
-	result, err := conn.Exec("INSERT INTO users (name, role_id, email, password) VALUES (?, ?, ?, ?)", user.Name, user.RoleID, user.Email, user.Password)
+	result, err := conn.Exec("INSERT INTO users (name, role_id, cluster_id, email, password) VALUES (?, ?, ?, ?, ?)", user.Name, user.RoleID, user.ClusterID, user.Email, user.Password)
 	if err != nil {
 		return 0, err
 	}
@@ -18,9 +18,9 @@ func CreateUser(conn *sql.DB, user models.User) (int64, error) {
 
 // GetUserByID - получение пользователя по ID
 func GetUserByID(conn *sql.DB, id int) (models.User, error) {
-	row := conn.QueryRow("SELECT id, name, role_id, email, password FROM users WHERE id = ?", id)
+	row := conn.QueryRow("SELECT id, name, role_id, cluster_id, email, password FROM users WHERE id = ?", id)
 	var user models.User
-	err := row.Scan(&user.ID, &user.Name, &user.RoleID, &user.Email, &user.Password)
+	err := row.Scan(&user.ID, &user.Name, &user.RoleID, &user.ClusterID, &user.Email, &user.Password)
 	if err != nil {
 		return user, err
 	}
@@ -34,11 +34,11 @@ func DeleteUser(conn *sql.DB, id int) error {
 }
 
 // UpdateUser - полное обновление пользователя по ID
-func UpdateUser(conn *sql.DB, id int, name string, role_id int, email, password string) error {
+func UpdateUser(conn *sql.DB, id int, name string, role_id, cluster_id int, email, password string) error {
 	query := `UPDATE users 
-	          SET name = ?, role_id = ?, email = ?, password = ? 
+	          SET name = ?, role_id = ?, cluster_id = ?, email = ?, password = ? 
 	          WHERE id = ?`
-	_, err := conn.Exec(query, name, role_id, email, password, id)
+	_, err := conn.Exec(query, name, role_id, cluster_id, email, password, id)
 
 	if err != nil {
 		return fmt.Errorf("не удалось обновить пользователя с ID %d: %v", id, err)

@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"ClusterMate/internal/db"
+	db "ClusterMate/internal/db/crud"
 	"ClusterMate/internal/models"
 	"database/sql"
 	"encoding/json"

@@ -10,11 +10,10 @@ import (
 )
 
 func RegisterRoutes(conn *sql.DB, r chi.Router) {
-	r.Route("/api", func(r chi.Router) {
+	r.Route("/api/v1", func(r chi.Router) {
 		r.Mount("/users", handlers.UserRouter(conn))
 		r.Mount("/roles", handlers.RoleRouter(conn))
-		//  TODO: Реализовать хэнделры
-		// r.Mount("/clusters", handlers.ClusterRouter())
+		r.Mount("/clusters", handlers.ClusterRouter(conn))
 	})
 
 	// Проверка доступности сервера
